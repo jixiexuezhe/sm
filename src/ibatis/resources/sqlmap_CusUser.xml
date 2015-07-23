@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CusUser" >
+	<typeAlias alias="cusUserDO" type="ibatis.model.CusUserDO"/>
+  <resultMap id="cusUserDOResultMap" class="cusUserDO" >
+    <result column="id" property="id"/>
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified"/>
+    <result column="creator" property="creator"/>
+    <result column="modifier" property="modifier"/>
+    <result column="is_deleted" property="isDeleted"/>
+    <result column="user_no" property="userNo" />
+    <result column="user_name" property="userName"/>
+    <result column="user_english_name" property="userEnglishName"/>
+    <result column="user_type" property="userType" />
+    <result column="login_name" property="loginName"/>
+    <result column="password" property="password"/>
+    <result column="account_id" property="accountId"/>
+    
+    <result column="permission_type" property="permissionType"/>
+  </resultMap>
+  
+  
+  <resultMap id="cusSysUserDOResultMap" class="cusUserDO" >
+    <result column="id" property="id"/>
+    <result column="gmt_create" property="gmtCreate" />
+    <result column="gmt_modified" property="gmtModified"/>
+    <result column="creator" property="creator"/>
+    <result column="modifier" property="modifier"/>
+    <result column="is_deleted" property="isDeleted"/>
+    <result column="user_no" property="userNo" />
+    <result column="user_name" property="userName"/>
+    <result column="user_english_name" property="userEnglishName"/>
+    <result column="user_type" property="userType" />
+    <result column="login_name" property="loginName"/>
+    <result column="password" property="password"/>
+  
+  </resultMap>
+   <!--
+  <typeAlias alias="cusRelationDO"
+		type="com.zhongan.core.user.dao.dataobject.CusRelationQueryDO" />
+		
+  <typeAlias alias="queryUserNameRelationDO"
+		type="com.zhongan.core.user.dao.dataobject.UserNameRelationDO" />
+  <typeAlias alias="queryUserNoRelationDO"
+		type="com.zhongan.core.user.dao.dataobject.UserNoRelationDO" />
+  
+  <resultMap id="queryUserNameRelationResultMap" class="queryUserNameRelationDO">
+		<result property="userId" column="user_id" />
+	</resultMap>
+	
+	<typeAlias alias="queryCusUserDO"
+		type="com.zhongan.core.user.dao.dataobject.CusUserDO" />
+		
+	<resultMap id="queryCusUserDOResultMap" class="queryCusUserDO">
+		<result property="id" column="id" />
+		<result property="userName" column="user_name" />
+		<result property="userType" column="user_type" />
+		<result property="userNo" column="user_no" />
+		<result property="permissionType" column="permission_type" />
+	</resultMap>-->
+  
+  <sql id="cus_user_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.creator, a1.modifier, a1.is_deleted, a1.user_no, a1.user_name,
+      a1.user_english_name, a1.user_type, a1.login_name, a1.password,a1.account_id, a1.permission_type
+  </sql>
+  
+    <sql id="cus_sys_user_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.creator, a1.modifier, a1.is_deleted, a1.user_no, a1.user_name,
+      a1.user_english_name, a1.user_type, a1.login_name, a1.password
+  </sql>
+  
+  <select id="selectCusUserById" resultMap="cusUserDOResultMap" parameterClass="java.lang.Long" >
+    select 
+    <include refid="cus_user_do_columns"/>
+    <![CDATA[  
+    from cus_user_0000 a1
+    where id = #id#
+    ]]>
+  </select>
+   <select id="checkUser" resultMap="cusSysUserDOResultMap" parameterClass="java.util.Map" >
+    select 
+    <include refid="cus_sys_user_do_columns"/>
+    <![CDATA[  
+    from cus_sys_user a1
+    where login_name = #login_name# and password=#password#
+    ]]>
+  </select>
+  
+</sqlMap>
